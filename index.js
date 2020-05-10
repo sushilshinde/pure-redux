@@ -30,13 +30,30 @@ const initState = {
 }
 
 
-const reducer = (state = initState, action) =>{
+const initCackState = {
+    numOfCakes: 10
+}
+
+const initIceCreamState = {
+    numOfIceCreams: 20
+}
+
+
+
+const cakeReducer = (state = initCackState, action) =>{
     switch(action.type) {
         case BUY_CAKE: 
             return {
                 ...state,
                 numOfCakes: state.numOfCakes - action.quantity
-            }
+            }        
+        default:
+            return state
+    }   
+}
+
+const iceCreamReducer = (state = initIceCreamState, action) =>{
+    switch(action.type) {       
         case BUY_ICECREAM: 
             return {
                 ...state,
@@ -47,7 +64,7 @@ const reducer = (state = initState, action) =>{
     }   
 }
 
-const store = redux.createStore(reducer)
+const store = redux.createStore(redux.combineReducers({cake:cakeReducer,iceCream:iceCreamReducer}))
 
 console.log("Opening stock = ",store.getState())
 
