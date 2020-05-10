@@ -1,5 +1,5 @@
 const redux = require('redux')
-
+const reduxLogger = require('redux-logger')
 //action constants
 const BUY_CAKE = 'BUY_CAKE',BUY_ICECREAM = 'BUY_ICECREAM'
 
@@ -64,12 +64,14 @@ const iceCreamReducer = (state = initIceCreamState, action) =>{
     }   
 }
 
-const store = redux.createStore(redux.combineReducers({cake:cakeReducer,iceCream:iceCreamReducer}))
+const store = redux.createStore(
+    redux.combineReducers({cake:cakeReducer,iceCream:iceCreamReducer}),
+    redux.applyMiddleware(reduxLogger.createLogger()))
 
 console.log("Opening stock = ",store.getState())
 
 const unsubscribe = store.subscribe(() => {
-    console.log('Current inventory', store.getState())
+    //console.log('Current inventory', store.getState())
 })
 
 console.log('order 2 cakes')
